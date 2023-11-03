@@ -1,10 +1,11 @@
 # Use base shared Python image
-FROM python:3.8
+FROM python:3.9
 
-RUN pip3 install --upgrade pip
+RUN pip install --upgrade pip
+RUN pip install --upgrade setuptools wheel
 
 COPY ./requirements.txt /requirements.txt
-RUN pip3 install -r /requirements.txt
+RUN pip install --no-cache-dir --use-pep517 -r /requirements.txt
 
 # Copy the project files into the container
 COPY ./src /src
@@ -18,4 +19,4 @@ EXPOSE 8000
 WORKDIR /src
 
 # Start the application
-CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "main:app"]
+CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000", "app.main:app"]

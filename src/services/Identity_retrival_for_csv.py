@@ -10,7 +10,7 @@ from datalayer.datapreprocessor import DataPreprocessor
 class NameIdentityRetrievalForCsv(BaseComponent):
     def __init__(self, model_name):
         super().__init__('NameIdentityRetrievalForCsv')
-        self.sources = utils.read_yaml_file('C:/Users/sejal/Downloads/codin/LLM-WebToGraph/src/datalayer/datasources.yml')
+        self.sources = utils.read_yaml_file('datalayer/datasources.yml')
         self.csv_sources = self.sources.get('csv', [])
         self.html_sources = self.sources.get('link', [])
         self.model_name = model_name
