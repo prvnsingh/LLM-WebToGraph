@@ -15,7 +15,7 @@ app = FastAPI(
 
 @app.get("/generate_tags")
 async def generate_tags():
-    ner = NameIdentityRetrievalForCsv(model_name='gpt-3.5-turbo')
+    ner = NameIdentityRetrievalForCsv(model_name='gpt-3.5-turbo', data_path='datalayer/datasources.yml')
     ner.run()
     return {"status": "success"}
 
@@ -27,6 +27,6 @@ async def health_check():
 
 
 if __name__ == '__main__':
-    app_config = utils.read_yaml_file('config.yml')
+    app_config = utils.read_yaml_file('app/config.yml')
     load_dotenv()
     uvicorn.run(app, port=app_config.get('port'), host=app_config.get('host'))

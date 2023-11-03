@@ -5,7 +5,7 @@ pre_defined_sources = ('link', 'csv')
 
 
 class DataPreprocessor(BaseComponent):
-    def __init__(self,datasource):
+    def __init__(self, datasource):
         super().__init__('DataPreprocessor')
         self.sources = utils.read_yaml_file(datasource)
         self.csv_sources = self.sources.get('csv', [])
@@ -17,7 +17,7 @@ class DataPreprocessor(BaseComponent):
     def get_html_sources(self):
         return self.html_sources
 
-    def run(self):
+    def run(self, **kwargs):
         pass
 
     # if sources:

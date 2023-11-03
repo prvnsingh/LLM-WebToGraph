@@ -7,7 +7,7 @@ from components.base_component import BaseComponent
 def _dump_data_to_neo4j(tx, data):
     for key, value in data.items():
         # Create a node for each key-value pair
-        tx.run("CREATE (n:Node {key: $key, value: $value})", key=key, value=value)
+        tx.run()
 
 
 class Neo4jDumper(BaseComponent):

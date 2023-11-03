@@ -9,7 +9,8 @@ class BaseComponent(ABC):
     def __init__(self, logger_name):
         self.logger = self._configure_logger(logger_name)
 
-    def _configure_logger(self, component_name):
+    @staticmethod
+    def _configure_logger(component_name):
         logger = logging.getLogger(component_name)
         logger.setLevel(logging.INFO)
 
