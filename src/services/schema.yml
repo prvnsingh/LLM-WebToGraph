@@ -1,0 +1,34 @@
+properties:
+  Organizations:
+    type: string
+  Project_Name:
+    type: string
+  location:
+    type: string
+  date:
+    type: string
+  financial_Value:
+    type: string
+  key_personals/POC:
+    type: string
+  Industry_type:
+    type: string
+  project_status:
+    type: string
+  Sustainability and Environmental Factors:
+    type: string
+  Collaboration and Partnerships:
+    type: string
+  Risk Factors:
+    type: string
+  Vendor and Supplier Information:
+    type: string
+  brief:
+    type: string
+required:
+- Organizations
+- Project_Name
+- location
+- date
+- financial_Value
+- project_status

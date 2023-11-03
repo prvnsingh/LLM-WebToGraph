@@ -1,0 +1,6 @@
+link:
+    - https://www.worldbank.org/en/projects-operations/procurement?srce=both
+    - https://projects.worldbank.org/en/projects-operations/projects-list?os=0
+csv:
+    - data/AssistanceListings_DataGov_PUBLIC_WEEKLY_20200321.csv
+    - data/ContractOpportunities-20231031-045845.csv

@@ -1,0 +1,5 @@
+Model
+.idea
+.env
+**__pychache__**
+*.pyc
