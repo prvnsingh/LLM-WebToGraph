@@ -1,7 +1,9 @@
+import json
+
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
-
+from fastapi.responses import HTMLResponse
 from app import utils
 from services.Identity_retrival_for_csv import NameIdentityRetrievalForCsv
 
@@ -17,8 +19,7 @@ app = FastAPI(
 async def generate_tags():
     ner = NameIdentityRetrievalForCsv(model_name='gpt-3.5-turbo', data_path='datalayer/datasources.yml')
     ner.run()
-    return {"status": "success"}
-
+    return HTMLResponse(content='Successfully generated the knowledge from the data sources!!!', status_code=200)
 
 # health check route
 @app.get("/health")

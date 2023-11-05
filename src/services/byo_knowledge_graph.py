@@ -21,10 +21,6 @@
 
 
 import os
-import ssl
-
-ssl._create_default_https_context = ssl._create_unverified_context
-
 chunk_size = 256
 chunk_overlap = 30
 os.environ["OPENAI_API_KEY"] = ""
@@ -39,7 +35,7 @@ os.environ["PINECONE_ENV"] = ""
 # In[2]:
 
 
-from langchain.document_loaders.wikipedia import WikipediaLoader
+from langchain.document_loaders.html import WikipediaLoader
 
 loader = WikipediaLoader(query="LeBron James")
 documents = loader.load()
@@ -72,7 +68,7 @@ split_documents = text_splitter.split_documents(documents)
 
 # In[4]:
 
-
+import spacy
 from slangchain.nlp.ner.entity_extractor import EntityExtractor
 from slangchain.nlp.ner.phrase_extractor import KeyPhraseExtractor
 from slangchain.nlp.ner.knowledge_graph import KnowledgeGraph

@@ -37,4 +37,6 @@ class LLM(BaseComponent):
         schema = get_schema()
         self.logger.info(f'schema: {schema}')
         chain = create_extraction_chain(schema, self.llm)
-        return chain.run(input_text)
+        llm_response = chain.run(input_text)
+        self.logger.info(f'llm_response: {llm_response}')
+        return llm_response

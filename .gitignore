@@ -3,3 +3,4 @@ Model
 .env
 **__pychache__**
 *.pyc
+logs.txt

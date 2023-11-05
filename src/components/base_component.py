@@ -26,15 +26,30 @@ class BaseComponent(ABC):
         logger.addHandler(file_handler)
         return logger
 
+
+    def handle_error(self, error_message, exception=None):
+        # Centralized error handling
+        self.logger.error(error_message)
+        if exception:
+            self.logger.error(f"Exception: {str(exception)}")
+        # You can add more error handling logic here, such as sending alerts or notifications
+
+    def _run(self, input: Union[str, List[float]]) -> str:
+        try:
+            return self.run(input)
+        except Exception as e:
+            self.handle_error(f"An error occurred: {str(e)}", exception=e)
+            return str(e)  # You can customize the return value in case of an error
+
     @abstractmethod
     def run(
-        self,
-        input: Union[str, List[float]],
+            self,
+            input: Union[str, List[float]],
     ) -> str:
         """Comment"""
 
     def run_async(
-        self,
-        input: Union[str, List[float]],
+            self,
+            input: Union[str, List[float]],
     ) -> str:
         """Comment"""

@@ -6,7 +6,7 @@ from components.base_component import BaseComponent
 
 def _dump_data_to_neo4j(tx, data):
     for key, value in data.items():
-        # Create a node for each key-value pair
+        # Creating a node for each key-value pair (identity-relationship pair)
         tx.run()
 
 
@@ -21,7 +21,7 @@ class Neo4jDumper(BaseComponent):
     def dump_data(self, tx, data):
         for key, value in data.items():
             # Create a node for each key-value pair
-            tx.run("CREATE (n:Node {key: $key, value: $value})", key=key, value=value)
+            tx.run(query="CREATE (n:Node {key: $key, value: $value})", key=key, value=value)
             self.logger.info(f"Dumped data for {key}: {value} to neo4j")
 
     def run(self, data):
