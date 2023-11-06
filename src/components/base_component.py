@@ -1,6 +1,22 @@
 import logging
 from abc import ABC, abstractmethod
+from functools import wraps
 from typing import List, Union
+
+
+
+def log_errors(logger):
+    def decorator(run):
+        @wraps(run)
+        def wrapper(*args, **kwargs):
+            try:
+                return run(*args, **kwargs)
+            except Exception as e:
+                logger.log_error(f"An error occurred: {str(e)}", exception=e)
+
+        return wrapper
+
+    return decorator
 
 
 class BaseComponent(ABC):
@@ -9,6 +25,22 @@ class BaseComponent(ABC):
     def __init__(self, logger_name):
         self.logger = self._configure_logger(logger_name)
 
+    @log_errors
+    @abstractmethod
+    def run(
+            self,
+            input: Union[str, List[float]],
+    ) -> str:
+        """Comment"""
+
+    @log_errors
+    @abstractmethod
+    async def run_async(
+            self,
+            input: Union[str, List[float]],
+    ) -> str:
+        """Comment"""
+
     @staticmethod
     def _configure_logger(component_name):
         logger = logging.getLogger(component_name)
@@ -16,7 +48,6 @@ class BaseComponent(ABC):
 
         # Create a file handler for logging to a file
         file_handler = logging.FileHandler('logs.txt')
-        file_handler.setLevel(logging.ERROR)
 
         # Create a formatter
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -26,30 +57,9 @@ class BaseComponent(ABC):
         logger.addHandler(file_handler)
         return logger
 
-
-    def handle_error(self, error_message, exception=None):
+    def log_error(self, error_message, exception=None):
         # Centralized error handling
         self.logger.error(error_message)
         if exception:
             self.logger.error(f"Exception: {str(exception)}")
         # You can add more error handling logic here, such as sending alerts or notifications
-
-    def _run(self, input: Union[str, List[float]]) -> str:
-        try:
-            return self.run(input)
-        except Exception as e:
-            self.handle_error(f"An error occurred: {str(e)}", exception=e)
-            return str(e)  # You can customize the return value in case of an error
-
-    @abstractmethod
-    def run(
-            self,
-            input: Union[str, List[float]],
-    ) -> str:
-        """Comment"""
-
-    def run_async(
-            self,
-            input: Union[str, List[float]],
-    ) -> str:
-        """Comment"""

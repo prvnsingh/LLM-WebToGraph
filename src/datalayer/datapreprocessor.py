@@ -19,10 +19,3 @@ class DataPreprocessor(BaseComponent):
 
     def run(self, **kwargs):
         pass
-
-    # if sources:
-    #     # Access and configure data sources based on the YAML structure
-    #     # html_sources = sources.get("link", [])
-    #     html_sources = sources.get("link", [])
-    #     print(html_sources)
-    #     # csv_sources = sources.get("csv", [])

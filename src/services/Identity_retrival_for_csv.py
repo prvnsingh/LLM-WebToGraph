@@ -11,7 +11,6 @@ class NameIdentityRetrievalForCsv(BaseComponent):
         super().__init__('NameIdentityRetrievalForCsv')
         self.sources = utils.read_yaml_file(data_path)
         self.csv_sources = self.sources.get('csv', [])
-        self.html_sources = self.sources.get('link', [])
         # instantiating the openai llm model and neo4j connection
         self.neo4j_instance = Neo4jDumper(config_path='app/config.yml')
         self.open_ai_llm = LLM(model=model_name)
@@ -30,4 +29,4 @@ class NameIdentityRetrievalForCsv(BaseComponent):
             response = self.open_ai_llm.run(input_text=data[-1])
             # instantiating neo4jBD and dumping the knowledge graph
             self.neo4j_instance.run(data=response)
-            self.logger.info(f'knowledge graph populated successfully')
+            self.logger.info(f'knowledge graph populated successfully for data source: {csvfile}')

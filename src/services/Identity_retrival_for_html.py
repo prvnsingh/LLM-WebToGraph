@@ -1,54 +1,36 @@
-from langchain.document_loaders import AsyncChromiumLoader
+from langchain.document_loaders import AsyncChromiumLoader, AsyncHtmlLoader
 from langchain.document_transformers import BeautifulSoupTransformer
-
-# Load HTML
-loader = AsyncChromiumLoader(["https://www.wsj.com"])
-html = loader.load()
-bs_transformer = BeautifulSoupTransformer()
-docs_transformed = bs_transformer.transform_documents(html, tags_to_extract=["span"])
-
-# Result
-docs_transformed[0].page_content[0:500]
+from app import utils
+from app.llm import LLM
+from components.base_component import BaseComponent
+from data_services.Neo4jDumper import Neo4jDumper
 
 
-import pprint
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+class NameIdentityRetrievalForHtml(BaseComponent):
+    def __init__(self, model_name, data_path):
+        super().__init__('NameIdentityRetrievalForHtml')
+        self.sources = utils.read_yaml_file(data_path)
+        self.html_sources = self.sources.get('link', [])
+        # instantiating the openai llm model and neo4j connection
+        self.neo4j_instance = Neo4jDumper(config_path='app/config.yml')
+        self.open_ai_llm = LLM(model=model_name)
 
-from langchain.chains import create_extraction_chain
+    def run_async(self, **kwargs):
+        for link in self.html_sources:
+            loader =AsyncHtmlLoader(link)
+            html = loader.load()
+            # html = loader.load()
+            bs_transformer = BeautifulSoupTransformer()
+            docs_transformed = bs_transformer.transform_documents(html, tags_to_extract=["table"])
+            self.logger.info(docs_transformed[0].page_content[0:500])
 
-schema = {
-    "properties": {
-        "news_article_title": {"type": "string"},
-        "news_article_summary": {"type": "string"},
-    },
-    "required": ["news_article_title", "news_article_summary"],
-}
+            # setting up openai model and extracting knowledge graph
+            self.logger.info(f'loading model {self.open_ai_llm}')
+            tokens_cap = len(docs_transformed[0].page_content) - 4
 
-
-def extract(content: str, schema: dict):
-    return create_extraction_chain(schema=schema, llm=llm).run(content)
-
-
-def scrape_with_playwright(urls, schema):
-    loader = AsyncChromiumLoader(urls)
-    docs = loader.load()
-    bs_transformer = BeautifulSoupTransformer()
-    docs_transformed = bs_transformer.transform_documents(
-        docs, tags_to_extract=["span"]
-    )
-    print("Extracting content with LLM")
-
-    # Grab the first 1000 tokens of the site
-    splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-        chunk_size=1000, chunk_overlap=0
-    )
-    splits = splitter.split_documents(docs_transformed)
-
-    # Process the first split
-    extracted_content = extract(schema=schema, content=splits[0].page_content)
-    pprint.pprint(extracted_content)
-    return extracted_content
-
-
-urls = ["https://www.wsj.com"]
-extracted_content = scrape_with_playwright(urls, schema=schema)
+            # just sending last few lines of csv as the token limit is limited of openai api free version.
+            # model should  be changed to claude2 (Anthropic) or premium openai api key should be used.
+            response = self.open_ai_llm.run(input_text=docs_transformed[0].page_content[tokens_cap:])
+            # instantiating neo4jBD and dumping the knowledge graph
+            self.neo4j_instance.run(data=response)
+            self.logger.info(f'knowledge graph populated successfully for data source: {link}')

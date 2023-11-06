@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from app import utils
 from services.Identity_retrival_for_csv import NameIdentityRetrievalForCsv
+from services.Identity_retrival_for_html import NameIdentityRetrievalForHtml
 
 app = FastAPI(
     title="LLM-WebToGraph",
@@ -14,8 +15,15 @@ app = FastAPI(
     version="0.1.0",
 )
 
+@app.get("/generate_tags_from_html")
+async def generate_tags():
+    ner = NameIdentityRetrievalForHtml(model_name='gpt-3.5-turbo', data_path='datalayer/datasources.yml')
+    ner.run_async() # asyncronous call since html pages can take time to load and scrape
+    return HTMLResponse(content='Successfully generated the knowledge from the data sources!!!', status_code=200)
 
-@app.get("/generate_tags")
+
+
+@app.get("/generate_tags_from_csv")
 async def generate_tags():
     ner = NameIdentityRetrievalForCsv(model_name='gpt-3.5-turbo', data_path='datalayer/datasources.yml')
     ner.run()
