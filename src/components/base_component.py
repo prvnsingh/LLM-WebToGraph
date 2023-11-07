@@ -4,7 +4,6 @@ from functools import wraps
 from typing import List, Union
 
 
-
 def log_errors(logger):
     def decorator(run):
         @wraps(run)
@@ -34,7 +33,6 @@ class BaseComponent(ABC):
         """Comment"""
 
     @log_errors
-    @abstractmethod
     async def run_async(
             self,
             input: Union[str, List[float]],
@@ -47,7 +45,7 @@ class BaseComponent(ABC):
         logger.setLevel(logging.INFO)
 
         # Create a file handler for logging to a file
-        file_handler = logging.FileHandler('logs.txt')
+        file_handler = logging.FileHandler('logs/logs.txt')
 
         # Create a formatter
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')

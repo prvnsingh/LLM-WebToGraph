@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r /requirements.txt
 # Copy the project files into the container
 COPY ./src /src
 
-
+RUN MKDIR ./logs/
 
 # Expose any necessary ports
 EXPOSE 8000
@@ -20,4 +20,4 @@ EXPOSE 8501
 WORKDIR /src
 
 # Start the application
-CMD ["sh", "-c", "streamlit run app/ui.py & uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+CMD ["sh", "-c", "streamlit run UI/ui.py & uvicorn app.main:app --host 0.0.0.0 --port 8000"]

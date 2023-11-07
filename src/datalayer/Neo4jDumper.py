@@ -1,13 +1,10 @@
+from langchain.graphs import Neo4jGraph
+from langchain.graphs.graph_document import GraphDocument
 from neo4j import GraphDatabase
 
 from app import utils
 from components.base_component import BaseComponent
-
-
-def _dump_data_to_neo4j(tx, data):
-    for key, value in data.items():
-        # Creating a node for each key-value pair (identity-relationship pair)
-        tx.run()
+from datalayer.KnowledgeGraph import map_to_base_node, map_to_base_relationship
 
 
 class Neo4jDumper(BaseComponent):
@@ -17,6 +14,9 @@ class Neo4jDumper(BaseComponent):
         self.uri = config.get('neo4j').get('uri')
         self.username = config.get('neo4j').get('username')
         self.password = config.get('neo4j').get('password')
+        self.graph = Neo4jGraph(
+            url=self.uri, username=self.username, password=self.password
+        )
 
     def dump_data(self, tx, data):
         for key, value in data.items():
@@ -30,6 +30,25 @@ class Neo4jDumper(BaseComponent):
                 with driver.session() as session:
                     self.dump_data(session, data)
             self.logger.info("Neo4j database connected successfully. and data dumped successfully.")
-            return driver.session()
+        except Exception as e:
+            self.logger.error(f"Error while connecting to neo4j: {str(e)}")
+        finally:
+            session.close()
+
+    # New implementation using graph document
+    def run2(self, data, document):
+        try:
+            graph = Neo4jGraph(
+                url=self.uri, username=self.username, password=self.password
+            )
+            # Construct a graph document
+            graph_document = GraphDocument(
+                nodes=[map_to_base_node(node) for node in data.nodes],
+                relationships=[map_to_base_relationship(rel) for rel in data.rels],
+                source=document
+            )
+            # Store information into a graph
+            graph.add_graph_documents([graph_document])
+
         except Exception as e:
             self.logger.error(f"Error while connecting to neo4j: {str(e)}")

@@ -27,3 +27,6 @@ for microservices architecture
     A separate data service which dumps data to S3. This service will ingest data from s3 rather than data directory. The downstream service include Selenium bot that scrape web and download csv from (). 
     
 
+https://python.langchain.com/docs/use_cases/graph/diffbot_graphtransformer
+https://python.langchain.com/docs/use_cases/graph/graph_cypher_qa
+https://blog.langchain.dev/constructing-knowledge-graphs-from-text-using-openai-functions/
