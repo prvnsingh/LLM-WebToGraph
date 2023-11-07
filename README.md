@@ -19,31 +19,31 @@ The LLM-WebToGraph project combines several key components to achieve its goal:
 ## Features
 
 - Web scraping from various sources, such as web links and CSV files.
-- Data transformation and extraction using OpenAI LLMs.
+- Data transformation and extraction using OpenAI LLM (gpt-3.5-turbo).
 - Population of a structured knowledge graph in Neo4j Aura Database.
 - FastAPI-based health check API to monitor the application's status.
 - Streamlit web application for querying and visualizing the knowledge graph.
 
 ## Getting Started
-1. configuring the dataSources
-   - Update the data files (csv) in the data directory.
+1. Configuring the data sources
+   - Update the data files .csv in the data directory.
    - Update the links of html in datasource.yml
 2. Setup environment variables
    - Add credentials in .env file like openAI api key and neo4jDB password or add environment variables.
 
-3. configure the schema.yml for identities and relationships
+3. Configure the schema.yml for identities and relationships
    - Modify the schema.yml to specify the identities to be recognized.
-4. Run the streamlit UI and fast app.
+4. Run the streamlit UI and FASTAPI app.
    - build docker and run the image with env file
 ~~~sh
-   docker run --env-file .env -p 8501:8501 -p 8000:8000 image_name 
+   sudo docker run --env-file .env -p 8501:8501 -p 8000:8000 image_name 
 ~~~
 To access the application
 ~~~html
 http://localhost:8501/
 ~~~
 
-To check backend APIs, access swagger at
+To check backend APIs, access the swagger at
 ```html
 http://localhost:8000/docs
 ```
