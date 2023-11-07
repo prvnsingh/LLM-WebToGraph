@@ -1,32 +1,79 @@
 # LLM-WebToGraph
-It is project which uses transformer to scrape the web and LLM to retrieve the identity from the text and store it in neo4j.
 
-Data sources
-World Bank - https://www.worldbank.org/en/projects-operations/procurement, https://projects.worldbank.org/en/projects-operations/projects-list
-Sam Gov - https://sam.gov/content/opportunities
+LLM-WebToGraph is a powerful project that harnesses the capabilities of Langchain and OpenAI's Language Models (LLMs) to scrape data from various sources on the web, transforming it into a structured knowledge graph. This knowledge graph is then populated into a Neo4j Aura Database, providing an efficient way to store, query, and retrieve information using cypher query and LLMs. With the synergy of Langchain, OpenAI LLMs, and Neo4j, this project offers a robust solution for knowledge management and retrieval.
 
-objective:
-Extract entities, a.k.a. Named Entity Recognition (NER), which are going to be the nodes of the knowledge graph.
-Extract relations between the entities, a.k.a. Relation Classification (RC), which are going to be the edges of the knowledge graph.
+## Overview
 
+The LLM-WebToGraph project combines several key components to achieve its goal:
 
-TL:DR:
-Change data files in data directory and configure data source.yml file
-Edit Env file and provide correct configuration 
-Edit Schema file for identities to be recognized
-run main.py
+1. **Langchain:** A language model designed for natural language understanding and generation, powering the core of the project.
 
-Brief:
-In this project we have created and interface for populating and retrieving information for graphdb using LLMs.
-I have LAMA2 model/openAI model  for NER (name identity recognition) algorithm. Identities are specified in the schema.json file.
-I have also used cypher query to generate insights from graphBD. 
+2. **OpenAI's Language Models (LLMs):** These models are used to extract and process data from various sources, converting unstructured data into structured knowledge.
 
+3. **Neo4j Aura Database:** The project stores the structured knowledge graph in a Neo4j Aura Database, allowing for efficient storage and retrieval.
 
-Future Scope:
-for microservices architecture
-    A separate data service which dumps data to S3. This service will ingest data from s3 rather than data directory. The downstream service include Selenium bot that scrape web and download csv from (). 
-    
+4. **FastAPI:** To expose an API for interacting with the project and to check its health status.
 
-https://python.langchain.com/docs/use_cases/graph/diffbot_graphtransformer
-https://python.langchain.com/docs/use_cases/graph/graph_cypher_qa
-https://blog.langchain.dev/constructing-knowledge-graphs-from-text-using-openai-functions/
+5. **Streamlit:** For building a user-friendly interface to query and visualize the knowledge graph.
+
+## Features
+
+- Web scraping from various sources, such as web links and CSV files.
+- Data transformation and extraction using OpenAI LLMs.
+- Population of a structured knowledge graph in Neo4j Aura Database.
+- FastAPI-based health check API to monitor the application's status.
+- Streamlit web application for querying and visualizing the knowledge graph.
+
+## Getting Started
+1. configuring the dataSources
+   - Update the data files (csv) in the data directory.
+   - Update the links of html in datasource.yml
+2. Setup environment variables
+   - Add credentials in .env file like openAI api key and neo4jDB password or add environment variables.
+
+3. configure the schema.yml for identities and relationships
+   - Modify the schema.yml to specify the identities to be recognized.
+4. Run the streamlit UI and fast app.
+   - build docker and run the image with env file
+~~~sh
+   docker run --env-file .env -p 8501:8501 -p 8000:8000 image_name 
+~~~
+To access the application
+~~~html
+http://localhost:8501/
+~~~
+
+To check backend APIs, access swagger at
+```html
+http://localhost:8000/docs
+```
+ 
+
+## Contributing
+
+Contributions to the LLM-WebToGraph project are welcome! If you'd like to contribute, please follow these guidelines:
+
+- Fork the repository.
+- Create a new branch for your feature or bug fix.
+- Make your changes and ensure tests pass.
+- Submit a pull request.
+
+## Future Scope
+In the future, the project can be extended with a microservices architecture, including:
+
+A separate data service responsible for ingesting data from S3.
+Utilization of a Selenium bot to scrape the web and download CSV files.
+Integration with more data sources for enhanced knowledge graph creation.
+
+## References
+- [Langchain Graph Transformer Documentation](https://python.langchain.com/docs/use_cases/graph/diffbot_graphtransformer)
+- [Langchain Cypher Query Documentation](https://python.langchain.com/docs/use_cases/graph/graph_cypher_qa)
+- [Blog Post: Constructing Knowledge Graphs from Text](https://blog.langchain.dev/constructing-knowledge-graphs-from-text-using-openai-functions/)
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For questions or support, feel free to contact us at [prvns1997@gmail.com](mailto:prvns1997@email.com).
