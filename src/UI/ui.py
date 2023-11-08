@@ -8,7 +8,7 @@ st.write('Press submit to upload process the data and generate knowledge graph.'
 
 if st.button("process csv files and generate knowledge graph"):
     # Send user_input to FastAPI
-    fastapi_url = "http://localhost:8000//generate_tags_from_csv"
+    fastapi_url = "http://localhost:8000/generate_tags_from_csv"
     response = requests.get(fastapi_url)
     if response.status_code == 200:
         st.write(f"{response.text}")
@@ -17,7 +17,7 @@ if st.button("process csv files and generate knowledge graph"):
 
 if st.button("process html links and generate knowledge graph"):
     # Send user_input to FastAPI
-    fastapi_url = "http://localhost:8000//generate_tags_from_html"
+    fastapi_url = "http://localhost:8000/generate_tags_from_html"
     response = requests.get(fastapi_url)
     if response.status_code == 200:
         st.write(f"{response.text}")

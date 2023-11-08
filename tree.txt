@@ -1,0 +1,34 @@
+|-- Dockerfile
+|-- README.md
+|-- requirements.txt
+|-- src
+|-- |-- Model
+|-- |-- |-- llama-2-7b
+|-- |--     |-- checklist.chk
+|-- |--     |-- consolidated.00.pth
+|-- |--     |-- params.json
+|-- |-- UI
+|-- |-- |-- ui.py
+|-- |-- app
+|-- |-- |-- config.yml
+|-- |-- |-- llm.py
+|-- |-- |-- llm_prompter.py
+|-- |-- |-- main.py
+|-- |-- |-- utils.py
+|-- |-- components
+|-- |-- |-- base_component.py
+|-- |-- data
+|-- |-- |-- AssistanceListings_DataGov_PUBLIC_WEEKLY_20200321.csv
+|-- |-- |-- ContractOpportunities-20231031-045845.csv
+|-- |-- datalayer
+|-- |-- |-- KnowledgeGraph.py
+|-- |-- |-- Neo4jDumper.py
+|-- |-- |-- datapreprocessor.py
+|-- |-- |-- datasources.yml
+|-- |-- logs
+|-- |-- |-- logs.txt
+|-- |-- services
+|--     |-- Identity_retrival_for_csv.py
+|--     |-- Identity_retrival_for_html.py
+|--     |-- cypher_qa.py
+|--     |-- schema.yml

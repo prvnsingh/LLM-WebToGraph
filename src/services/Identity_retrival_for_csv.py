@@ -44,5 +44,5 @@ class NameIdentityRetrievalForCsv(BaseComponent):
             # response = self.open_ai_llm.extract_and_store_graph(document=data[-1])
             response = self.open_ai_llm.run(input_text=data[-1])
             # instantiating neo4jBD and dumping the knowledge graph
-            self.neo4j_instance.run2(data=response, document=data[-1])
+            self.neo4j_instance.run(data=response)
             self.logger.info(f'knowledge graph populated successfully for data source: {csvfile}')
