@@ -5,11 +5,6 @@ LLM-WebToGraph is a powerful project that harnesses the capabilities of Langchai
 ## Architecture
 ![design](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/design.jpeg?raw=true)
 
-## Working directory
-![Directory Tree](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/dirTree.jpg?raw=true)
-
-## Demo snapshot
-![Demo snapshot](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/working.jpg?raw=true)
 
 ## Overview
 
@@ -56,7 +51,11 @@ To check backend APIs, access the swagger at
 ```html
 http://localhost:8000/docs
 ```
- 
+## Working directory
+![Directory Tree](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/dirTree.jpg?raw=true)
+
+## Demo snapshot
+![Demo snapshot](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/working.jpg?raw=true)
 
 ## Contributing
 
