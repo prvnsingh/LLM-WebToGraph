@@ -3,7 +3,7 @@
 LLM-WebToGraph is a powerful project that harnesses the capabilities of Langchain and OpenAI's Language Models (LLMs) to scrape data from various sources on the web, transforming it into a structured knowledge graph. This knowledge graph is then populated into a Neo4j Aura Database, providing an efficient way to store, query, and retrieve information using cypher query and LLMs. With the synergy of Langchain, OpenAI LLMs, and Neo4j, this project offers a robust solution for knowledge management and retrieval.
 
 ## Architecture
-![design](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/design.jpg?raw=true)
+![design](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/design.jpeg?raw=true)
 
 ## Working directory
 ![Directory Tree](https://github.com/prvnsingh/LLM-WebToGraph/blob/main/dirTree.jpg?raw=true)
